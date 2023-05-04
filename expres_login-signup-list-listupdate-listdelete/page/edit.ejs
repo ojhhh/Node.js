@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>edit page</h2>
+    <!-- action이 따로 없으면 post 요청이 들어온 파라메터 값을 url에 적용 -->
+    <form method="post">
+      <label for="">id</label>
+      <input type="text" name="id" value="<%= data.id %>" disabled />
+      <label for="">name</label>
+      <input type="text" name="name" value="<%= data.name %>" />
+      <label for="">number</label>
+      <input type="text" name="number" value="<%= data.number %>" />
+      <label for="">series</label>
+      <input type="text" name="series" value="<%= data.series %>" />
+      <button>update</button>
+    </form>
+  </body>
+</html>
