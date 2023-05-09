@@ -27,7 +27,8 @@ app.set("view engine", "ejs");
 
 // 미들웨어
 app.use(express.urlencoded({ extended: false }));
-// postRoute 객체에 get 메소드로 / 루트 경로를 지정했을때 "/posts" 경로로 추가되어 라우팅
+// postRoute 객체에 get 메소드로 / 루트 경로를 지정했을때 "/posts" 경로가 추가되어 라우팅
+// app.use(postRoute);
 app.use("/posts", postRoute);
 // public 폴더의 파일들을 쓰기 위해 정적 경로 설정
 // 아래 경로를 "/css" 같이 설정 할 수도 있지만 없을 경우 기본적으로 "/" 경로 지정

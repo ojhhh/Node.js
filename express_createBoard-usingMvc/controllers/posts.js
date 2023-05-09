@@ -19,7 +19,7 @@ exports.SelectPost = async function (req, res) {
     const data = await posts.selectPost(id);
     return data;
   } catch (err) {
-    console.log("해달 게시글 보기 에러");
+    console.log("해당 게시글 보기 에러");
   }
 };
 

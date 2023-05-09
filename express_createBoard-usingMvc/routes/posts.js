@@ -1,4 +1,4 @@
-// 게시글의 route만 모아돟을 파일
+// 게시글의 route만 모아둘을 파일
 const express = require("express");
 // Router 메소드 : 라우팅을 관리 할 수 있게 도와주는 메소드. 라우팅의 내용을 작성해 놓고 app.use() 메소드로 추가
 const router = express.Router();

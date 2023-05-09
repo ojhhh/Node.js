@@ -38,7 +38,7 @@ const posts = {
         id,
       ]);
       // result는 1개 밖에 없을 거기 떄문에 배열의 첫번째 결과값 출력하기 위해 result[0] 입력
-      console.log("select : ", result[0]);
+      // console.log("select : ", result[0]);
       return result[0];
     } catch (err) {
       console.log("게시글 선택 조회 에러");
@@ -91,7 +91,7 @@ const posts = {
   },
 };
 
-// posts.initTable();
+posts.initTable();
 // posts.insert("insert test", "insert test");
 // posts.update(1, "modify test", "modify test");
 // posts.detate(2);
