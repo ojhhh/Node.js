@@ -4,13 +4,13 @@ const dot = require("dotenv").config();
 
 router.post("/", (req, res) => {
   const token = req.session.token;
-  const reqsession = req.session;
-  console.log("req");
-  console.log(req);
-  console.log("token");
-  console.log(token);
-  console.log("reqsession");
-  console.log(reqsession);
+  // const reqsession = req.session;
+  // console.log("req");
+  // console.log(req);
+  // console.log("token");
+  // console.log(token);
+  // console.log("reqsession");
+  // console.log(reqsession);
   // verify() : 토큰 유효성 검사
   // 첫번째 매개변수 : 토큰 전달
   // 두번째 매개변수 : key 전달

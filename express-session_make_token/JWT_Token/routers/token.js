@@ -7,7 +7,7 @@ const dot = require("dotenv").config();
 router.post("/login", (req, res) => {
   const name = "test";
   const key = process.env.KEY;
-  console.log(key);
+  // console.log(key);
   let token = jwt.sign(
     {
       type: "JWT",
@@ -19,7 +19,12 @@ router.post("/login", (req, res) => {
       issuer: "admin",
     }
   );
+  console.log("req");
+  console.log(req);
+  console.log("token");
+  console.log(token);
   req.session.token = token;
+  // console.log(token);
   res.render("page2");
 });
 
