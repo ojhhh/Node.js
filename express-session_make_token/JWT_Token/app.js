@@ -26,6 +26,20 @@ app.use(
   })
 );
 
+console.log(
+  app.use(
+    session({
+      // 세션을 발급할 떄 사용할 key. 소스코드에 노출 되지 않게 주의
+      secret: process.env.KEY2,
+      // 세션이 변경되거나 저장할떄나 불러올때 저장할지 여부
+      // false로 설정할 경우 기존에 세션이 변경되지 않았으면 다시 저장하지 않음
+      resave: false,
+      // 세션에 저장 할 때 초기화 여부
+      saveUninitialized: true,
+    })
+  )
+);
+
 app.use(pageRouter);
 app.use(tokenRouter);
 app.use("/userVerify", verifyRouter);
