@@ -45,12 +45,15 @@ exports.Login = async (req, res) => {
     // access token 발급
     const accessToken = jwt.sign(
       {
+        // user info
         user_id: data.user_id,
         mail: "user1@naver.com",
         nickname: "user1",
       },
+      // secret key
       process.env.ACCESS_TOKEN_KEY,
       {
+        // options
         expiresIn: "5s",
       }
     );
