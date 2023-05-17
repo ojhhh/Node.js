@@ -34,6 +34,7 @@ const createHash = (password) => {
 const compare = (password, hash) => {
   return new Promise((resolve, reject) => {
     // compare 메소드를 사용해서 문자열과 해시값을 전달
+    // -> 결과값을 true, false로 반환
     bcrypt.compare(password, hash, (err, same) => {
       resolve(same);
     });
