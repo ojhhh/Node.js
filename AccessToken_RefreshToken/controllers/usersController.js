@@ -82,16 +82,20 @@ exports.Login = async (req, res) => {
 // next 함수를 실행 시키면 다음 미들웨어로 실행이동
 exports.verifyLogin = async (req, res, next) => {
   const { accessToken, refreshToken } = req.session;
+  // access token을 가져와 env에 있는 access token key와 비교
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY, (err, acc_decoded) => {
     if (err) {
-      // access 토큰이 위변조되거나 만료됬으면
+      // access 토큰이 위변조되거나 만료됬으면 refreshtoken을 비교
+      // -> 클라이언트의 refreshtoken과 env에 있는 refreshtoken을 비교
       jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_KEY,
         async (err, ref_decoded) => {
+          // 비교했을때 클라이언트의 refreshtoken이 없다면 err
           if (err) {
             console.log("refresh token 만료");
             res.send("다시 로그인 하세요.");
+            // 클라이언트의 refreshtoken과 서버의 refreshtoken이 같다면 해당 유저의 accesstoken 재발급
           } else {
             const data = await userSelect(ref_decoded.user_id);
             if (data.refresh == refreshToken) {
@@ -118,9 +122,4 @@ exports.verifyLogin = async (req, res, next) => {
       next();
     }
   });
-
-  // try {
-  // } catch (error) {
-  //   console.error(error);
-  // }
 };
