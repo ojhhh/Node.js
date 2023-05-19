@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
+  <body>
+    <h1>user page</h1>
+    <ul>
+      <% data.forEach((el)=>{ %>
+      <li>
+        <span class="name"><%= el.name %></span>님 <%= el.age %> 살 message <%=
+        el.msg %> <input type="text" class="item-input" /><button
+          class="item-btn"
+        >
+          submit
+        </button>
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+  <script>
+    // ajax : 요청과 응답에 대한 처리를 비동기적으로 할수 있게 도와주는 메소드
+    window.onload = function () {
+      let btns = document.querySelectorAll(".item-btn");
+      btns.forEach((el, index) => {
+        el.onclick = () => {
+          let value = document.querySelectorAll(".item-input")[index].value;
+          let name = document.querySelectorAll(".name")[index].innerText;
+          // console.log("value : ", value);
+          // console.log("name : ", name);
+          // ajax 메소드 사용
+          $.ajax({
+            // 요청할 url
+            url: "/create_post",
+            // 요청 방식
+            type: "post",
+            // 전달할 데이터
+            data: { name, value },
+          });
+        };
+      });
+    };
+  </script>
+</html>
