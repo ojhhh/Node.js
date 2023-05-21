@@ -1,4 +1,7 @@
 const Sequelize = require("sequelize");
+// const { Model, DataTypes } = require("sequelize");
+// const sequelize = require("./index").sequelize;
+// const User = require("./users");
 
 class Post extends Sequelize.Model {
   static init(sequelize) {
@@ -28,5 +31,33 @@ class Post extends Sequelize.Model {
     db.Post.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
+// class Post extends Model {}
+
+// Post.init(
+//   {
+//     msg: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     user_id: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       references: {
+//         model: User,
+//         key: "id",
+//       },
+//     },
+//   },
+//   {
+//     sequelize,
+//     modelName: "Post",
+//     tableName: "orm_post",
+//     charset: "utf8",
+//     collate: "utf8_general_ci",
+//   }
+// );
+
+// Post.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
+// User.hasMany(Post, { foreignKey: "user_id", sourceKey: "id" });
 
 module.exports = Post;

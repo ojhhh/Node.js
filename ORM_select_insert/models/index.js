@@ -20,10 +20,14 @@ const sequelize = new Sequelize(
 // 내보내줄 빈 객체
 const db = {};
 db.Sequelize = sequelize;
+db.sequelize = sequelize;
 // 테이블 초기화
-db.User = User;
+// db.User = User;
+db.User = require("./users");
+
 // 게시판 만들기
-db.Post = Post;
+// db.Post = Post;
+db.Post = require("./post");
 
 // users, post 테이블 만들기
 // 데이터베이스의 이름, 계정, 패스워드를 담은 객체를 매개변수로 전달
@@ -33,7 +37,8 @@ Post.init(sequelize);
 
 // 관계형 선언
 // user.js post.js에서 한 static 메소드에 db 매개변수 전달
-User.associate(db);
-Post.associate(db);
+// User.associate(db);
+// Post.associate(db);
+// Post.belongsTo(User);
 
 module.exports = db;

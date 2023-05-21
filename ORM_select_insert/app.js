@@ -68,14 +68,14 @@ app.get("/view/:name", (req, res) => {
     // -> 객체 이름은 modelname에 s가 붙고 modelName 이름 자체 마지막 글자가 s이면 s가 안붙음
     e.dataValues.Posts = e.dataValues.Posts.map((i) => i.dataValues);
     const Posts = e.dataValues;
-    console.log(Posts);
+    // console.log(Posts);
     res.render("view", { data: Posts });
   });
 });
 
 app.post("/create_post", (req, res) => {
   const { name, value } = req.body;
-  console.log(name, value);
+  // console.log(name, value);
   // findOne : 한개의 값을 조회
   User.findOne({
     // 검색 조건 추가

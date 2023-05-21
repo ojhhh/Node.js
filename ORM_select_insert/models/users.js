@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-console.log(Sequelize);
 
 // User 클래스에 sequelize안의 model 클래스를 상속
 class User extends Sequelize.Model {
@@ -19,6 +18,8 @@ class User extends Sequelize.Model {
         // unique : 고유키(중복되지 않음) 사용 여부
         // type: Sequelize.STRING, 선언할때 보통 require해서 sequelize를 가져올때 구조분해 해서 Datatypes을 가져와서 쓰던데 여긴 이렇게 써도 동작하는 원리가 뭐지?
         // -> type: Sequelize.STRING과 Datetypes를 구조 분해해서 type: Datetypes.STRING을 사용하는 방법 둘다 맞는 방법
+        // STRING으로 선언하면 VARCAHR(255)로 만들어짐
+        // VARCHAR의 경우 1 ~ 65535 선택할 수 있지만 TEXT 타입의 경우 무조건 65535 고정
         name: {
           type: Sequelize.STRING,
           allowNull: false,
@@ -62,9 +63,9 @@ class User extends Sequelize.Model {
   // sequelize에서 1:N 관게를 hasMany로 테이블의 관계 정의
   // sourceKey : user테이블 안에 어떤 키를 foreignKey와 연결 할지 선언
   //
-  static associate(db) {
-    db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
-  }
+  // static associate(db) {
+  //   db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
+  // }
 }
 
 module.exports = User;
