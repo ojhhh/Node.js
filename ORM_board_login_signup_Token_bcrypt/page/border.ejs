@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>borard</h2>
+    작성자 : <%= data.name %>
+    <ul>
+      <% data.Posts.forEach((post) => { %>
+      <li>
+        <p><%= post.msg %></p>
+        <form action="/border/view_update/<%= post.id %>" method="post">
+          <input type="text" name="msg" /> <br />
+          <button>update</button>
+        </form>
+        <a href="/border/del/<%= post.id %>">delete</a>
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>
