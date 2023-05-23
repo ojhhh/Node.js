@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>board page</h2>
+    <h5>hello <%= data.decoded.user_id %></h5>
+    <a href="/board/write/<%= %>">writing</a>
+    <table>
+      <tr>
+        <th>content</th>
+        <th>writer</th>
+      </tr>
+      <% data.forEach((el)=>{ %>
+      <tr>
+        <td><a href="/board/view/<%= el.id %>"><%= el.msg %></a></td>
+        <td><%= el.user_id %></td>
+        <td><a href="/board/update/<%= el.id %>">update</a></td>
+        <td><a href="/board/delete/<%= el.id %>">delete</a></td>
+      </tr>
+      <% }); %>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>user list page</h2>
+    <table>
+      <tr>
+        <th>user_id</th>
+        <th>lv</th>
+      </tr>
+      <% data.forEach((el)=>{ %>
+      <tr>
+        <td><%= el.user_id %></td>
+        <td><%= el.lv %></td>
+        <td><a href="/admin/accept/<%= el.user_id %>">가입승인</a></td>
+        <td><a href="/admin/denied/<%= el.user_id %>">등급 내리기</a></td>
+      </tr>
+      <% }); %>
+    </table>
+  </body>
+</html>
