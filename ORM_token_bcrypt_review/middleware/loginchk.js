@@ -9,7 +9,7 @@ exports.loginChk = async (req, res, next) => {
       process.env.ACCESS_TOKEN_KEY,
       (err, decoded) => {
         if (err) {
-          res.render("다시 로그인하세요");
+          res.send("다시 로그인하세요");
         } else {
           req.decoded = decoded;
           next();

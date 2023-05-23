@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>view page</h2>
+    <span>content : <%= data.msg %></span> <br />
+    <span>writer : <%= data.user_id %></span>
+
+    <ul>
+      <% data.forEach((el)=>{ %>
+      <li><%= el.user_id %> : <%= el.ment %></li>
+      <% }); %>
+    </ul>
+    <form action="/board/comment/<%= data.id %>" method="post">
+      <label for="">Comment</label>
+      <input type="text" name="ment" />
+      <button>submit</button>
+    </form>
+  </body>
+</html>

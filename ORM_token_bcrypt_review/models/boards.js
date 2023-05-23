@@ -25,9 +25,7 @@ class Board extends Model {
 
   static join(db) {
     db.Board.belongsTo(db.User, { targetKey: "id" });
-    db.Board.hasMany(db.Comment, {
-      sourceKey: "id",
-    });
+    db.Board.hasMany(db.Comment, { foreignKey: "BoardId", sourceKey: "id" });
   }
 }
 

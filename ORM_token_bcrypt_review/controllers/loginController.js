@@ -28,7 +28,7 @@ exports.isLogin = async (req, res, next) => {
       if (campare) {
         const token = jwt.sign(
           {
-            id: user.user_id,
+            id: user.id,
             user_id: user_id,
             lv: user.lv,
           },

@@ -10,9 +10,6 @@ class Comment extends Model {
         user_id: {
           type: DataTypes.STRING(20),
         },
-        // t_num: {
-        //   type: DataTypes.INTEGER,
-        // },
       },
       {
         sequelize,
@@ -25,9 +22,7 @@ class Comment extends Model {
     );
   }
   static join(db) {
-    db.Comment.belongsTo(db.Board, {
-      targetKey: "id",
-    });
+    db.Comment.belongsTo(db.Board, { foreignKey: "BoardId", targetKey: "id" });
   }
 }
 
