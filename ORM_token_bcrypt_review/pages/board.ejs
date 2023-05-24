@@ -13,11 +13,13 @@
     <a href="/board/mypage/<%= data.decoded.id %>">mypage</a>
     <table>
       <tr>
+        <th>board_num</th>
         <th>content</th>
         <th>writer</th>
       </tr>
       <% data.forEach((el)=>{ %>
       <tr>
+        <td><%= el.id %></td>
         <td><a href="/board/view/<%= el.id %>"><%= el.msg %></a></td>
         <td><%= el.user_id %></td>
         <td><a href="/board/update/<%= el.id %>">update</a></td>

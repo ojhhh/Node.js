@@ -9,17 +9,34 @@
   <body>
     <h2>mypage</h2>
     <h5>hello <%= data.user_id %></h5>
+    <h3>my board list</h3>
     <table>
       <tr>
+        <th>board_num</th>
         <th>content</th>
         <th>writer</th>
       </tr>
       <% data.forEach((el)=>{ %>
       <tr>
+        <td><%= el.id %></td>
         <td><a href="/board/view/<%= el.id %>"><%= el.msg %></a></td>
         <td><%= el.user_id %></td>
         <td><a href="/board/update/<%= el.id %>">update</a></td>
         <td><a href="/board/delete/<%= el.id %>">delete</a></td>
+      </tr>
+      <% }); %>
+    </table>
+
+    <h3>my comment list</h3>
+    <table>
+      <tr>
+        <th>board_num</th>
+        <th>comment</th>
+      </tr>
+      <% data.ment.forEach((el)=>{ %>
+      <tr>
+        <td><%= el.BoardId %></td>
+        <td><%= el.ment %></td>
       </tr>
       <% }); %>
     </table>

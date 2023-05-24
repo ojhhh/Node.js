@@ -106,12 +106,22 @@ exports.commentInsert = async (req, res) => {
   const { ment } = req.body;
   const id = req.params.id;
   try {
-    await Comment.create({
-      ment,
-      user_id: decoded.user_id,
-      BoardId: id,
+    const chk = await Board.findAll({
+      where: {
+        user_id: decoded.user_id,
+      },
     });
-    res.redirect(`/board/view/${id}`);
+    const lengthChk = await chk.map((i) => i.dataValues);
+    if (lengthChk.length < 2) {
+      res.send("게시물을 2개 이상 작성해야 댓글을 쓸 수 있습니다.");
+    } else {
+      await Comment.create({
+        ment,
+        user_id: decoded.user_id,
+        BoardId: id,
+      });
+      res.redirect(`/board/view/${id}`);
+    }
   } catch (error) {
     console.error(error);
   }
@@ -144,10 +154,16 @@ exports.myPage = async (req, res) => {
       where: {
         user_id: decoded.user_id,
       },
+      include: [{ model: Comment }],
     });
     const data = myboard.map((i) => i.dataValues);
+    const com = data.map((i) => i.Comments.map((j) => j.dataValues));
     data.user_id = decoded.user_id;
-    console.log(data);
+    // map을 2번 돌려 배열이 2개가 생김
+    // 빈배열도 반환 되어 1개 댑스를 제거
+    data.ment = com.flat();
+    // console.log(data[0].Comments[0].dataValues.ment);
+
     res.render("mypage", { data });
   } catch (error) {
     console.error(error);
