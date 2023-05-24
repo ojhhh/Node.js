@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div>chat</div>
+    <input type="text" id="userName" />
+    <input type="text" id="message" />
+    <button id="btn">send</button>
+
+    <ul id="content"></ul>
+  </body>
+  <script>
+    window.onload = () => {
+      // client socket connect
+      const socket = io.connect();
+      socket.on("message", (data) => {
+        // 누군가 채팅을 보내면
+        let el = `<li><h3>${data.name}</h3><p>${data.message}</p><p>${data.date}</p></li>`;
+        content.innerHTML += el;
+      });
+      // 버튼을 누르면 이벤트푸쉬
+      btn.onclick = () => {
+        socket.emit("message", {
+          name: userName.value,
+          message: message.value,
+          date: new Date().toString(),
+        });
+      };
+    };
+  </script>
+</html>

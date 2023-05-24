@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- socket.io 모듈을 사용해서 연결 -->
+    <!-- 루트 경로에 socket.io.js가 동적으로 생성 -->
+    <!-- 스크립트 안에 있는 연결 객체를 사용해서 소켓연결 시도 -->
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <label for="">text</label> <br />
+    <input type="text" id="text" /> <br />
+    <label for="">id</label> <br />
+    <input type="text" id="user" /> <br />
+    <button id="btn">transfer</button>
+    <a href="/test">test</a>
+  </body>
+  <script>
+    // 소켓 객체를 사용해서 연결
+    window.onload = () => {
+      // io 객체의 connect 메소드를 통해 연결 시도
+      // -> 연결되면서 app.js에 io.sockets.on("connection", (socket) => { 이게 실행되면서 socket.id가 만들어지는듯
+      const socket = io.connect();
+      // 클라이언트가 서버측에서 해당 이벤트를 푸쉬하면 hi 문자열 반환
+      // hi는 이벤트의 이름
+      // -> hi라는 이벤트 이름을 가진 요청이 오면 실행
+      socket.on("hi", (data) => {
+        alert(data);
+      });
+      btn.onclick = () => {
+        // emit : 클라이언트에서 서버로 이벤트 푸쉬
+        socket.emit("hi", { msg: text.value, id: user.value });
+      };
+    };
+    // 프론트에서 버튼을 눌러 hi 이벤트를 푸쉬하고 서버측에서 hi 이벤트가 등록되있으면 찾아 실행
+    // io.sockets.to(data.id).emit("hi", data.msg); 해당 socket에 hi 이벤트를 서버측에서 푸쉬
+    // 해당 이벤트를 푸쉬받은 클라이언트 측에서 이벤트를 실행
+  </script>
+</html>
