@@ -12,14 +12,21 @@
     <span>writer : <%= data.user_id %></span>
 
     <ul>
-      <% data.forEach((el)=>{ %>
-      <li><%= el.user_id %> : <%= el.ment %></li>
+      <% data.ment.forEach((el)=>{ %>
+      <li>
+        <%= el.user_id %> : <%= el.ment %>
+        <a href="/board/commentdel/<%= el.id %>">삭제</a>
+      </li>
       <% }); %>
     </ul>
+
     <form action="/board/comment/<%= data.id %>" method="post">
       <label for="">Comment</label>
       <input type="text" name="ment" />
       <button>submit</button>
     </form>
   </body>
+  <script>
+    ment.forEach((el) => {});
+  </script>
 </html>

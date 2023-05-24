@@ -5,10 +5,11 @@ const {
   BoardMain,
   updateView,
   updateBoard,
-
   deleteBoard,
   selectBoard,
   commentInsert,
+  deleteComment,
+  myPage,
 } = require("../controllers/boardController");
 
 router.get("/", loginChk, BoardMain);
@@ -22,6 +23,10 @@ router.get("/view/:id", loginChk, selectBoard);
 router.get("/update/:id", loginChk, updateView);
 
 router.get("/delete/:id", loginChk, deleteBoard);
+
+router.get("/commentdel/:id", loginChk, deleteComment);
+
+router.get("/mypage/:id", loginChk, myPage);
 
 router.post("/write", loginChk, Insert);
 

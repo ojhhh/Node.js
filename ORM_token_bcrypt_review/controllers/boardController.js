@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User, Board, Comment } = require("../models");
+const { findAll } = require("../models/users");
 
 exports.BoardMain = async (req, res) => {
   const decoded = req.decoded;
@@ -31,13 +32,14 @@ exports.Insert = async (req, res) => {
 
 exports.selectBoard = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
+  // console.log(id);
   try {
-    const data = await Board.findAll({
+    const data = await Board.findOne({
       where: { id },
       include: [{ model: Comment }],
     });
-    console.log(data);
+    const ment = await data.Comments.map((i) => i.dataValues);
+    data.ment = ment;
     res.render("view", { data });
   } catch (error) {
     console.error(error);
@@ -110,6 +112,43 @@ exports.commentInsert = async (req, res) => {
       BoardId: id,
     });
     res.redirect(`/board/view/${id}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  const decoded = req.decoded;
+  const id = req.params.id;
+  try {
+    const comments = await Comment.findOne({
+      where: {
+        id,
+      },
+    });
+    if (comments.user_id == decoded.user_id) {
+      await Comment.destroy({ where: { id } });
+      res.redirect(`/board/view/${comments.BoardId}`);
+    } else {
+      res.send("댓글 작성자만 삭제할 수 있습니다.");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.myPage = async (req, res) => {
+  const decoded = req.decoded;
+  try {
+    const myboard = await Board.findAll({
+      where: {
+        user_id: decoded.user_id,
+      },
+    });
+    const data = myboard.map((i) => i.dataValues);
+    data.user_id = decoded.user_id;
+    console.log(data);
+    res.render("mypage", { data });
   } catch (error) {
     console.error(error);
   }
