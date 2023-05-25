@@ -24,7 +24,7 @@
       // io 객체의 connect 메소드를 통해 연결 시도
       // -> 연결되면서 app.js에 io.sockets.on("connection", (socket) => { 이게 실행되면서 socket.id가 만들어지는듯
       const socket = io.connect();
-      // 클라이언트가 서버측에서 해당 이벤트를 푸쉬하면 hi 문자열 반환
+      // 서버에서 클라이언트에게 hi라는 이벤트이름을 가진 요청이 들어오면
       // hi는 이벤트의 이름
       // -> hi라는 이벤트 이름을 가진 요청이 오면 실행
       socket.on("hi", (data) => {
