@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      body {
+        position: relative;
+        height: 100vh;
+      }
+      .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        border: 1px solid;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      #send {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        border: 1px solid;
+        box-sizing: border-box;
+        display: flex;
+        left: 0;
+      }
+
+      #send #msg {
+        border: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        width: 90%;
+      }
+
+      #send #sendBtn {
+        background-color: antiquewhite;
+        border: none;
+        box-sizing: border-box;
+        padding: 10px;
+        width: 10%;
+      }
+
+      #messages {
+        margin: 0;
+        padding: 0;
+      }
+
+      #messages li {
+        list-style: none;
+      }
+
+      #login {
+        width: 300px;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .join_text {
+        background-color: white;
+      }
+
+      .leave_text {
+        background-color: gray;
+        border: 1px solid gray;
+      }
+
+      #main {
+        display: none;
+      }
+
+      .userlist {
+        width: 100px;
+        height: 500px;
+        border: 1px solid;
+        position: absolute;
+        top: 0;
+        right: -100px;
+        box-sizing: border-box;
+      }
+
+      #userlisttab {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div>chat</div>
+      <div id="login">
+        <p>login</p>
+        <input type="text" id="username" />
+        <button id="loginBtn">connect</button>
+      </div>
+      <div id="main">
+        <select name="" id="rooms">
+          <option value="room1">room 1</option>
+          <option value="room2">room 2</option>
+        </select>
+        <ul id="messages">
+          <div id="send">
+            <input type="text" id="msg" />
+            <button id="sendBtn">send</button>
+          </div>
+          <div id="send2">
+            <input type="text" id="msg2" />
+            <button id="sendBtn2">whispering</button>
+          </div>
+        </ul>
+      </div>
+      <div class="userlist">
+        <ul id="userlisttab"></ul>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    window.onload = () => {
+      // 로그인 버튼을 누르면
+      loginBtn.onclick = () => {
+        login.style.display = "none";
+        main.style.display = "block";
+
+        const name = username.value;
+        // 선택한 select의 value 값을 가져옴
+        // console.log(rooms);
+        let room = rooms.options[rooms.selectedIndex].value;
+        // socket에 연결 시도
+        const socket = io.connect();
+        socket.emit("joinRoom", room, name);
+
+        // select 태그의 선택이 바뀌었을때
+        rooms.onchange = function (e) {
+          let el = e.target;
+          // console.log(el.selectedIndex);
+          // 다른 채팅방을 선택하여 유저가 떠남
+          socket.emit("leaveRoom", room, name);
+          room = rooms.options[el.selectedIndex].value;
+
+          // 기존에 있던 방을 떠난 후 새로운 방에 조인
+          socket.emit("joinRoom", room, name);
+        };
+
+        socket.on("joinRoom1", (room, name, userTab1) => {
+          let chatLi = document.createElement("li");
+
+          let chatText = `${name} 님이 ${room} 에 입장하셧습니다.`;
+          chatLi.append(chatText);
+          messages.appendChild(chatLi);
+          userlisttab.innerHTML = "";
+
+          userTab1.forEach((el) => {
+            let chatLi2 = document.createElement("li");
+            chatLi2.classList.add("userArr");
+
+            chatLi2.append(el.name);
+            userlisttab.append(chatLi2);
+          });
+        });
+
+        socket.on("joinRoom2", (room, name, userTab2) => {
+          let chatLi = document.createElement("li");
+
+          let chatText = `${name} 님이 ${room} 에 입장하셧습니다.`;
+          chatLi.append(chatText);
+          messages.appendChild(chatLi);
+          userlisttab.innerHTML = "";
+
+          userTab2.forEach((el) => {
+            let chatLi2 = document.createElement("li");
+
+            chatLi2.append(el.name);
+            userlisttab.append(chatLi2);
+          });
+        });
+        // 채팅방을 떠나면
+        socket.on("leaveRoom", (room, name, userTab) => {
+          let chatLi = document.createElement("li");
+          let chatText = `${name} 님이 ${room} 에 나갔습니다.`;
+          chatLi.append(chatText);
+          messages.append(chatLi);
+
+          userlisttab.innerHTML = "";
+
+          userTab.forEach((el) => {
+            let chatLi2 = document.createElement("li");
+
+            chatLi2.append(el.name);
+            userlisttab.append(chatLi2);
+          });
+        });
+
+        // 같은 채팅방에 있는 사람만 채팅이 보임
+        socket.on("chat", (name, msg) => {
+          let chatLi = document.createElement("li");
+          let chatText = `${name} : ${msg}`;
+          chatLi.append(chatText);
+          messages.append(chatLi);
+        });
+
+        socket.on("chat2", (name, msg) => {
+          let chatLi = document.createElement("li");
+          let chatText = `${name} : ${msg}`;
+          chatLi.append(chatText);
+          messages.append(chatLi);
+        });
+
+        sendBtn.onclick = () => {
+          socket.emit("chat", room, name, msg.value);
+          // console.log(msg);
+          msg.values = "";
+        };
+        sendBtn2.onclick = () => {
+          // console.log(name);
+          socket.emit("whisper", room, msg2.value);
+          socket.on("whisper", ([whisperId], name) => {
+            const { id } = whisperId;
+            socket.emit("chat2", id, name, msg.value);
+            // console.log(msg2.value, name, msg.value);
+          });
+          msg.values = "";
+        };
+
+        userlisttab.onclick = function (e) {
+          const username = e.target.innerHTML;
+          msg2.value = username;
+
+          // socket.emit("whisper", room, username);
+
+          // socket.on("whisper", ([whisperId], username) => {
+          //   const { id } = whisperId;
+          //   msg2.value = username;
+          // });
+        };
+      };
+    };
+  </script>
+</html>
