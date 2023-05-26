@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>posts</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h2>posts page</h2>
+    <a href="http://127.0.0.1:8080/posts/insert">writing</a>
+    <a href="http://127.0.0.1:8080/posts/mypage">mypage</a>
+    <table id="postList">
+      <tr>
+        <th>title</th>
+        <th>content</th>
+        <th>writer</th>
+      </tr>
+    </table>
+  </body>
+  <script>
+    async function getPosts() {
+      try {
+        const { data } = await axios.get(
+          "http://127.0.0.1:8080/posts/viewAll",
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log("posts.html");
+        // console.log(data);
+
+        data.forEach((el) => {
+          const createTr = document.createElement("tr");
+          const createTdTitle = document.createElement("td");
+          const createTdContent = document.createElement("td");
+          const createTdWriter = document.createElement("td");
+          const createTdUpdate = document.createElement("td");
+          const createTdDelete = document.createElement("td");
+
+          const updateAtag = document.createElement("a");
+          const deleteAtag = document.createElement("a");
+          updateAtag.setAttribute(
+            "href",
+            `http://127.0.0.1:8080/posts/update/${el.id}`
+          );
+          deleteAtag.setAttribute(
+            "href",
+            `http://127.0.0.1:8080/posts/delete/${el.id}`
+          );
+          updateAtag.innerHTML = "update";
+          deleteAtag.innerHTML = "delete";
+          createTdTitle.innerHTML = el.title;
+          createTdContent.innerHTML = el.content;
+          createTdWriter.innerHTML = el.writer;
+          createTr.append(createTdTitle);
+          createTr.append(createTdContent);
+          createTr.append(createTdWriter);
+          createTdUpdate.append(updateAtag);
+          createTdDelete.append(deleteAtag);
+          createTr.append(createTdUpdate);
+          createTr.append(createTdDelete);
+          postList.appendChild(createTr);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getPosts();
+  </script>
+</html>

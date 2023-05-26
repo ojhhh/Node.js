@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body></body>
+  <script>
+    async function getMydata() {
+      try {
+        const { data } = await axios.get(
+          "http://127.0.0.1:8080/posts/getmyinfo",
+          { withCredentials: true }
+        );
+        // console.log(data);
+
+        document.body.innerHTML = `
+        <h2>myinfo page</h2>
+    <form action="http://127.0.0.1:8080/posts/myinfoupdate/${data.id}" method="post">
+      <label for="">name</label>
+      <input type="text" name="name" value="${data.name}" />
+      <label for="">age</label>
+      <input type="text" name="age" value="${data.age}" />
+      <button>change info</button>
+    </form>`;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getMydata();
+  </script>
+</html>

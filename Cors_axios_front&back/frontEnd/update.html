@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>update</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body></body>
+  <script>
+    async function getSelectPost() {
+      try {
+        const { data } = await axios.get(
+          "http://127.0.0.1:8080/posts/selectPost/",
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(data);
+
+        document.body.innerHTML = `
+        <h2>update page</h2>
+        <form action="http://127.0.0.1:8080/posts/update/${data.id}" method="post">
+          <label for="">title</label>
+          <input type="text" name="title" value="${data.title}"/>
+          <label for="">content</label>
+          <input type="text" name="content" value="${data.content}"/>
+          <button>update</button>
+        </form>
+        `;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getSelectPost();
+  </script>
+</html>

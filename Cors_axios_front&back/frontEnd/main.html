@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      #isLoading {
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #isLoading img {
+        width: 300px;
+      }
+      #isLoading.disable {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>main page</h2>
+    <div id="isLoading">
+      <img src="./img/load-38.gif" />
+    </div>
+
+    <div>
+      <div>
+        <span>name : </span>
+        <span id="user_name"></span>
+      </div>
+      <div>
+        <span>age : </span>
+        <span id="user_age"></span>
+      </div>
+      <div>
+        <a href="http://127.0.0.1:8080/posts/">posts</a>
+      </div>
+    </div>
+  </body>
+  <script>
+    async function getAPI() {
+      try {
+        // withCredentials : true 브라우저상에서 쿠키를 서버로 전달 할 수 있는 옵션
+        const { data } = await axios.get("http://127.0.0.1:8080/login/view", {
+          withCredentials: true,
+        });
+        console.log("main page");
+        // console.log(data);
+        user_name.innerHTML = data.name;
+        user_age.innerHTML = data.age;
+        isLoading.classList.add("disable");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getAPI();
+  </script>
+</html>
