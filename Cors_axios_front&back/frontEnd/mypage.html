@@ -25,11 +25,29 @@
         const { data } = await axios.get("http://127.0.0.1:8080/posts/mypost", {
           withCredentials: true,
         });
-        console.log(data);
+        // console.log(data);
+        // posts.html의 for문과 비교
+        // 문자열을 조작하여 HTML을 생성하는 방식으로 브라우저가 한번에 처리할 수 있어 효율적이고 가독성이 좋음
+        // 문자열을 삽입하는 방식이기 때문에 해킹공격에 취약할수 있음(XSS)
+        // 별도의 라이브러리를 사용하여 보안에 신경써준다면 이방식이 더 좋아보임
+        // -> he 라이브러리 사용
+
+        // 예)
+        // const he = require("he");
+        //
+        // data.forEach((el) => {
+        //   mypageTable.innerHTML += `<tr><td>${he.encode(el.id)}</td><td>${he.encode(el.title)}</td><td>${he.encode(el.content)}</td><td>${he.encode(el.writer)}</td></tr>`;
+        // });
+
+        // -> 특수문자를 이스케이핑하여 사용자가 입력한 데이터가 HTML 태그나 자바스크립트가 코드로 해석되지 않고 문자열로 처리되어 XSS 공격을 방지
+        // -> 다만 posts.html for문에 비해 느려질 수 있지만 사용자가 눈치챌만큼 느려지진 않음
+
         data.forEach((el) => {
           mypageTable.innerHTML += `<tr><td>${el.id}</td><td>${el.title}</td><td>${el.content}</td><td>${el.writer}</td></tr>`;
         });
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     }
     getMyPost();
   </script>

@@ -51,6 +51,10 @@
     async function getAPI() {
       try {
         // withCredentials : true 브라우저상에서 쿠키를 서버로 전달 할 수 있는 옵션
+        // 기존에 실습했던 방식은 view engine 인 ejs를 활용해서 실습
+        // ejs를 활용하여 서버사이드 렌더링 방식으로 페이지를 로딩하면 서버측에서 로딩이 끝난 후에 화면을 띄워줌
+        // promise 기반인 axios를 활용하여 페이지를 구현하면 html 파일을 읽어들이고 비동기 방식으로 데이터를 요청하여 받아온 데이터를 body에 넣어줌
+        // 그렇기 때문에 데이터를 읽어 들이기 전까지는 데이터를 받아 출력하는 공간에 데이터가 없이 비어있어 그것을 가리기? 위해 로딩 gif를 넣어 데이터가 받아올때까지 기다림
         const { data } = await axios.get("http://127.0.0.1:8080/login/view", {
           withCredentials: true,
         });
@@ -58,6 +62,7 @@
         // console.log(data);
         user_name.innerHTML = data.name;
         user_age.innerHTML = data.age;
+        // 받아온 데이터를 body에 추가하고 로딩 gif를 끔
         isLoading.classList.add("disable");
       } catch (error) {
         console.error(error);

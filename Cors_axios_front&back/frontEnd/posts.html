@@ -31,6 +31,10 @@
         // console.log("posts.html");
         // console.log(data);
 
+        // mypage의 for문과 비교
+        // 두방식에 처리속도는 다르지 않음
+        // 이 방식은 DOM트리를 직접 다루는 것으로 상대적으로 더많은 계산이 필요
+        // 코드가 더 길고 복잡하지만 보안성은 좋음
         data.forEach((el) => {
           const createTr = document.createElement("tr");
           const createTdTitle = document.createElement("td");
