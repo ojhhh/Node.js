@@ -36,9 +36,9 @@ User.init(sequelize);
 Post.init(sequelize);
 
 // 관계형 선언
-// user.js post.js에서 한 static 메소드에 db 매개변수 전달
-// User.associate(db);
-// Post.associate(db);
+// users.js posts.js에서 한 static 메소드에 db 매개변수 전달
+User.associate(db);
+Post.associate(db);
 // Post.belongsTo(User);
 
 module.exports = db;

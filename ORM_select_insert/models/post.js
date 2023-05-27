@@ -27,37 +27,10 @@ class Post extends Sequelize.Model {
 
   // belongsTo 메소드를 사용해서 user에 id를 forenignKey로 연결
   // 유저의 id가 따라갈 키 참조키는 user_id
+  // foreignKey 생성시 별도의 이름을 정하지 않아도 modelName + primarykey 조합으로 컬럼이 생성됨
   static associate(db) {
     db.Post.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
-// class Post extends Model {}
-
-// Post.init(
-//   {
-//     msg: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     user_id: {
-//       type: DataTypes.INTEGER,
-//       allowNull: false,
-//       references: {
-//         model: User,
-//         key: "id",
-//       },
-//     },
-//   },
-//   {
-//     sequelize,
-//     modelName: "Post",
-//     tableName: "orm_post",
-//     charset: "utf8",
-//     collate: "utf8_general_ci",
-//   }
-// );
-
-// Post.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
-// User.hasMany(Post, { foreignKey: "user_id", sourceKey: "id" });
 
 module.exports = Post;

@@ -63,9 +63,9 @@ class User extends Sequelize.Model {
   // sequelize에서 1:N 관게를 hasMany로 테이블의 관계 정의
   // sourceKey : user테이블 안에 어떤 키를 foreignKey와 연결 할지 선언
   //
-  // static associate(db) {
-  //   db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
-  // }
+  static associate(db) {
+    db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
+  }
 }
 
 module.exports = User;
