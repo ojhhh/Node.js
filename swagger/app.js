@@ -8,7 +8,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use(saggerRouter);
 app.use("/user", usersRouter);
 
 app.listen(8080, () => {
