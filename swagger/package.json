@@ -1,0 +1,18 @@
+{
+  "name": "swagger",
+  "version": "1.0.0",
+  "description": "- 백엔드 개발자들이 개발을 하면 프론트엔드 개발자에게 문서화된 개발 결과를 제공하여 협업할 수 있게 도와주는 API - 개발을 하며 생길 수 있는 휴먼에러를 최소화",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  }
+}
