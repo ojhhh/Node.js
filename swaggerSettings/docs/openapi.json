@@ -14,9 +14,87 @@
   "paths": {
     "/posts": {
       "get": {
-        "tags": [
-          "Posts"
+        "tags": ["Posts"],
+        "summary": "Retrieve a post",
+        "description": "Retrieve a specific post by ID",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "description": "ID of the post to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "Title of the post"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Content of the post"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/postss": {
+      "get": {
+        "tags": ["Postss"],
+        "summary": "Retrieve a post",
+        "description": "Retrieve a specific post by ID",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "description": "ID of the post to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "Title of the post"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Content of the post"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/postsss": {
+      "get": {
+        "tags": ["Postss"],
         "summary": "Retrieve a post",
         "description": "Retrieve a specific post by ID",
         "parameters": [
