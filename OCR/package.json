@@ -1,0 +1,17 @@
+{
+  "name": "ocr",
+  "version": "1.0.0",
+  "description": "- 광학 문자 인식 - 이미지에서 글씨를 추출",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "tesseract.js": "^5.0.4"
+  }
+}
