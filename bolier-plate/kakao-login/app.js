@@ -14,12 +14,15 @@ app.use(express.urlencoded({ extended: false }));
 
 const AccessTokenDecode = async (access_token) => {
   try {
-    const decode = await axios.get("https://kapi.kakao.com/v2/user/me", {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-      },
-    });
+    const decode = await axios.get(
+      "https://kapi.kakao.com/v1/user/access_token_info",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      }
+    );
 
     return decode.data;
   } catch (error) {
@@ -27,7 +30,7 @@ const AccessTokenDecode = async (access_token) => {
   }
 };
 
-const IdTokenDecode = async (access_token) => {
+const UserInfo = async (access_token) => {
   try {
     const decode = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
       headers: {
@@ -102,20 +105,20 @@ app.get("/auth/kakao", async (req, res) => {
     const access_token_decode = await AccessTokenDecode(access_token);
 
     // 카카오 디벨로퍼에 설정 해둔 개인정보 값을 반환
-    const id_token_decode = await IdTokenDecode(access_token);
+    const user_info = await UserInfo(access_token);
 
     // console.log("userInfo : ", id_token_decode);
 
     // logout test용 access_token
     test_access_token = result.data.access_token;
     // logout test용 user_id
-    test_user_id = id_token_decode.id;
+    test_user_id = user_info.id;
 
     res.json({
       access_token,
       refresh_token,
       access_token_decode,
-      id_token_decode,
+      user_info,
     });
   } catch (error) {
     console.error(error);
