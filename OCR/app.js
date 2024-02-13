@@ -7,7 +7,9 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
   try {
-    const url = "https://tesseract.projectnaptha.com/img/eng_bw.png";
+    // const url = "https://tesseract.projectnaptha.com/img/eng_bw.png";
+    // const url = "./eng.png";
+    const url = "./elements.png";
     await tesseractModule(url);
   } catch (error) {
     console.error(error);
