@@ -5,6 +5,10 @@ const axios = require("axios");
 
 const app = express();
 
+// 로그아웃 기능 test용 변수들
+let test_access_token;
+let test_user_id;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -47,6 +51,29 @@ app.get("/login", async (req, res) => {
   }
 });
 
+app.get("/logout", async (req, res) => {
+  try {
+    const result = await axios.post(
+      `https://kapi.kakao.com/v1/user/logout`,
+      null,
+      {
+        params: {
+          target_id_type: "user_id",
+          target_id: test_user_id,
+        },
+        headers: {
+          Authorization: `Bearer ${test_access_token}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    res.send(result.status == 200 ? "logout success" : "logout failed");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 app.get("/auth/kakao", async (req, res) => {
   try {
     const { code } = req.query;
@@ -76,6 +103,13 @@ app.get("/auth/kakao", async (req, res) => {
 
     // 카카오 디벨로퍼에 설정 해둔 개인정보 값을 반환
     const id_token_decode = await IdTokenDecode(access_token);
+
+    // console.log("userInfo : ", id_token_decode);
+
+    // logout test용 access_token
+    test_access_token = result.data.access_token;
+    // logout test용 user_id
+    test_user_id = id_token_decode.id;
 
     res.json({
       access_token,
