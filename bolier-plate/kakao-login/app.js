@@ -47,7 +47,7 @@ app.get("/login", async (req, res) => {
   }
 });
 
-app.get("/auth", async (req, res) => {
+app.get("/auth/kakao", async (req, res) => {
   try {
     const { code } = req.query;
 
